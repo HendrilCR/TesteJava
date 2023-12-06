@@ -13,6 +13,12 @@ abstract class Pessoa{
     protected String senha;
 }
 
+
+
+
+
+
+
 class Professor extends Pessoa{
     protected String titulacao;
     protected String areaAtuacao;
@@ -112,7 +118,7 @@ class Curso {
     }
 }
 
-class Secretario implements Autenticavel {
+class Secretario implements Autenticavel {//Linha teste
     private String nome;
     private String senha;
     private Aluno[] alunos;
@@ -175,3 +181,4 @@ class Secretario implements Autenticavel {
 
 class Aluno{}//Falta implementar
 class Disciplina{}//Falta implementar
+//linha teste
