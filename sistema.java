@@ -13,14 +13,6 @@ abstract class Pessoa{
     protected String senha;
 }
 
-
-
-// 209121932798373792132
-//SDJAHDOSAHDOSADASHDSOADADNSA
-
-
-
-
 class Professor extends Pessoa{
     protected String titulacao;
     protected String areaAtuacao;
@@ -120,7 +112,7 @@ class Curso {
     }
 }
 
-class Secretario implements Autenticavel {//Linha teste
+class Secretario implements Autenticavel {
     private String nome;
     private String senha;
     private Aluno[] alunos;
@@ -183,4 +175,3 @@ class Secretario implements Autenticavel {//Linha teste
 
 class Aluno{}//Falta implementar
 class Disciplina{}//Falta implementar
-//linha teste
