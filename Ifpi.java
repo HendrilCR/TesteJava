@@ -1,27 +1,19 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Scanner;
+
+class Aluno extends Pessoa implements Autenticavel{ //Solução temporária
+    private String matricula;
+    public String getNome(){return this.nome;}
+    public String getMatricula(){return this.matricula;}
+
+    public boolean autenticar(String nome, String senha){
+        if(matricula == this.matricula && senha == this.senha){return true;}
+        else{return false;}}
+    }
 
 interface Autenticavel {
     boolean autenticar(String nome, String senha);
-}
-
-abstract class Pessoa{
-    protected String nome;
-    protected int cpf;
-    protected Data dataNascimento;
-    protected Data dataEntradaIfpi;
-    protected String senha;
-}
-
-class Professor extends Pessoa{
-    protected String titulacao;
-    protected String areaAtuacao;
-    
-    public String getTitulacao(){return this.titulacao;}
-    public String getArea(){return this.areaAtuacao;}
-    
-    public void setTitulacao(String tit){this.titulacao = tit;}
-    public void setArea(String are){this.areaAtuacao = are;}
 }
 
 class Coordenador extends Professor {
@@ -40,7 +32,7 @@ class Coordenador extends Professor {
     public void definirProfessorParaDisciplina(String nomeDisciplina, Professor professor) {
         for (Disciplina disciplina : disciplinas) {
             if (disciplina.getNome().equals(nomeDisciplina)) {
-                disciplina.setProfessorResponsavel(professor);
+                disciplina.setProfessor(professor);
                 break;
             }
         }
@@ -56,60 +48,105 @@ class Coordenador extends Professor {
     }
 }
 
-
 class Data{
-	private int dia; 
-	private int mes; 
-	private int ano; 
+    private int dia; 
+    private int mes; 
+    private int ano; 
 
-	Data(int dia, int mes, int ano){
-		this.dia = dia;
-		this.mes = mes;
-		this.ano = ano;}
+    Data(int dia, int mes, int ano){
+        this.dia = dia;
+        this.mes = mes;
+        this.ano = ano;}
 
-	public int[] getData(){
-		int[] data = new int[3];
-		data[0] = this.dia;
-		data[1] = this.mes;
-		data[2] = this.ano;
-		return data;
-	}
+    public int[] getData(){
+        int[] data = new int[3];
+        data[0] = this.dia;
+        data[1] = this.mes;
+        data[2] = this.ano;
+        return data;
+    }
 }
 
-class Curso {
+class Disciplina{ //Solução temporária
+    private String nome;
+    private Professor professor;
     private List<Aluno> alunos;
-    private List<Professor> professores;
-    private List<Disciplina> disciplinas;
-    
-    public Curso(List<Aluno> alunos, List<Professor> professores, List<Disciplina> disciplinas) {
-        this.alunos = alunos;
-        this.professores = professores;
-        this.disciplinas = disciplinas;
-    }
-    
-    public List<Aluno> getAlunos() {
-        return alunos;
-    }
 
-    public void setAlunos(List<Aluno> alunos) {
-        this.alunos = alunos;
-    }
-    
-    public List<Professor> getProfessores() {
-        return professores;
-    }
+    Disciplina(String nome){this.nome = nome;}
 
-    public void setProfessores(List<Professor> professores) {
-        this.professores = professores;
-    }
-    
-    public List<Disciplina> getDisciplinas() {
-        return disciplinas;
-    }
+    String getNome(){return this.nome;}
+    Professor getProfessor(){return this.professor;}
+    void adicionarAlunos(Aluno[] alunos){this.alunos = alunos;}
+    void setProfessor(Professor professor){this.professor = professor;}
+}
 
-    public void setDisciplinas(List<Disciplina> disciplinas) {
-        this.disciplinas = disciplinas;
+abstract class Pessoa{
+    protected String nome;
+    protected int cpf;
+    protected Data dataNascimento;
+    protected Data dataEntradaIfpi;
+    protected String senha;
+}
+
+class Menu{
+    private Scanner s1 = new Scanner(System.in);
+
+    public int menuLogin(){
+        int state = 1;
+        int opcao = -1;
+
+        while(state == 1){
+            System.out.print("Insira como deseja fazer login: \n[1-Aluno]\n[2-Coordenador]\n[3-Professor]\n[0-Sair]\n--> ");
+            String str = s1.nextLine();
+
+            try{
+                opcao = Integer.parseInt(str);
+                state = 0;
+
+                switch(opcao){
+                    case 0:
+                        System.out.println("Saindo...");
+                        System.exit(0);
+                        break;
+                    case 1: 
+                        System.out.println("Aluno selecionado");
+                        break;
+                    case 2: 
+                        System.out.println("Coordenador selecionado");
+                        break;
+                    case 3: 
+                        System.out.println("Professor selecionado");
+                        break;
+                    default:
+                        System.out.println("Insira uma opção válida!");
+                        state = 1;
+                        break;}}
+
+            catch(Exception e){
+                System.out.println("Digite apenas valores numéricos válidos!");}}
+
+        return(opcao);}
+
+    public void menuAutenticacao(int tipo){
+        if(tipo == 1){System.out.print("Insira a matrícula: ");}
+        else{System.out.print("Insira o nome de usuário: ");}
+        
+        String usuario = s1.nextLine();
+        System.out.print("Insira a senha: ");
+        String senha = s1.nextLine();
+
     }
+}
+
+class Professor extends Pessoa{
+    protected String titulacao;
+    protected String areaAtuacao;
+    
+    public String getTitulacao(){return this.titulacao;}
+    public String getArea(){return this.areaAtuacao;}
+    
+    public void setTitulacao(String tit){this.titulacao = tit;}
+    public void setArea(String are){this.areaAtuacao = are;}
 }
 
 class Secretario implements Autenticavel {
@@ -173,17 +210,5 @@ class Secretario implements Autenticavel {
     }
     public boolean autenticar(String nome, String senha){
         if(nome == this.nome && senha == this.senha){return true;}
-        else{return false;
-}
-
-class Aluno extends Pessoa implements Autenticavel{ //Solução temporária
-    private String matricula;
-    public String getNome(){return this.nome;}
-    public String getMatricula(){return this.matricula;}
-
-    public boolean autenticar(String nome, String senha){
-        if(matricula == this.matricula && senha == this.senha){return true;}
         else{return false;}}
     }
-
-class Disciplina{}//Falta implementar
